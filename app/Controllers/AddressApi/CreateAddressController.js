@@ -1,0 +1,41 @@
+import postgres from '../../../database/connections/postgres.js';
+
+export default async function CreateAddressController(request, response) {
+    try {
+        const { name, district, city } = request.body;
+
+        const error = [];
+
+        if (!name) {
+            error.push("name obrigatório!");
+        }
+
+        if (!city) {
+            error.push("city obrigatório!");
+        }
+
+        if (!district) {
+            error.push("district obrigatório!");
+        }
+
+        if (error.length > 0) {
+            return response.status(400).json({ error: error });
+        }
+
+        const result = await postgres.query(
+            'INSERT INTO adresses (name, district, city) VALUES ($1, $2, $3) RETURNING *',
+            [name, district, city]
+        );
+
+        return response.status(201).json(result.rows[0]);
+
+    } catch (error) {
+        console.error(error);
+
+        if (error.code === '23505') { // unique violation
+            return response.status(409).json({ error: error.detail });
+        }
+
+        return response.status(500).json({ error: 'Internal server error' });
+    }
+}
