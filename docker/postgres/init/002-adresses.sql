@@ -5,3 +5,4 @@ CREATE TABLE adresses (
     city TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
+
