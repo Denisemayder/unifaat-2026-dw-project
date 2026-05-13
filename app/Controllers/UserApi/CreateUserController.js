@@ -18,7 +18,10 @@ export default async function CreateUserController(request, response) {
             return response.status(400).json({ error: error });
         }
 
-        const result = await postgres.query('INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *', [name, email]);
+        const result = await postgres.query(
+            'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
+            [name, email]
+        );
         return response.status(201).json(result.rows[0]);
     } catch (error) {
         console.error(error);

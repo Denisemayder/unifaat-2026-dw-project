@@ -7,7 +7,7 @@ export default (() => {
     let connection = null;
 
     const connect = () => {
-        console.log(process.env.POSTGRES_PASSWORD);
+
         if (!connection) {
             connection = new Pool({
                 host: process.env.POSTGRES_HOST,

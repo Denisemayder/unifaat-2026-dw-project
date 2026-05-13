@@ -7,6 +7,7 @@ import app from "./bootstrap/app.js";
 /** Inicializador */
 app();
 
+/** */
 /** Iniciar roteador */
 const web = express();
 
